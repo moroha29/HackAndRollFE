@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
-import {ChangeEvent, FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 
 const gender = [
     {
@@ -82,15 +82,57 @@ export default function FormDialog() {
         gender: '',
         marital_status: '',
     });
-
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        if (token) {
+            console.log("token detected")
+            handleClose();
+        }
+    }, []);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
+    const handleLogin = async (event: FormEvent) => {
+        event.preventDefault();
+        const loginPayload = {
+            "name": formData.username,
+            "hashed_password": formData.password,
+        };
 
+        try {
+            const response = await fetch(`http://localhost:8000/users/login/`, { // Replace with your login endpoint
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginPayload),
+            });
+            console.log(loginPayload);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data)
+            // Assuming the JWT token is in the 'token' field of the response
+            const token = data
+            if (token) {
+                console.log("Received JWT Token:", token);
+                // Store the token in localStorage or sessionStorage
+                localStorage.setItem('jwtToken', token);
+                // You can now use this token for authenticated requests to your backend
+            }
+
+            handleClose();
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         console.log(formData); // For debugging
@@ -103,7 +145,7 @@ export default function FormDialog() {
         };
         try {
 
-            const response = await fetch('http://localhost:8000/users/register/', {
+            const response = await fetch(`http://localhost:8000/users/login/`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -126,6 +168,7 @@ export default function FormDialog() {
                 // Store the token in localStorage or sessionStorage
                 localStorage.setItem('jwtToken', token);
                 // You can now use this token for authenticated requests to your backend
+
             }
 
             handleClose();
@@ -234,6 +277,7 @@ export default function FormDialog() {
         </DialogContent>
               <DialogActions>
                   <Button onClick={handleClose}>I already have an account</Button>
+                  <Button onClick={handleLogin}>Login</Button> {/* Login button */}
                   <Button onClick={handleSubmit}>Next</Button>
               </DialogActions>
       </Dialog>
