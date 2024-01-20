@@ -60,12 +60,14 @@ const ResultsPage = () => {
 
     return (
         <Box>
+            <div className="grid grid-cols-1 gap-1 xl:grid-cols-2">
             {questions.map(question => (
                 <Card key={question._id} sx={{ margin: '20px', padding: '20px' }}>
                     {!submittedQuestions.includes(question._id) && <CardDisplay questionData={question} handleSubmit={() => handleSubmission(question)} />}
                     {submittedQuestions.includes(question._id) && <ResultsComponent data={question} />}
                 </Card>
             ))}
+            </div>
             <Navbar/>
         </Box>
     );

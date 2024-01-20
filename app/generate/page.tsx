@@ -91,12 +91,12 @@ export default function SimpleBottomNavigation() {
 
         <div className='bg-black h-screen'>
 
-        <main className="flex min-h-screen flex-col items-center justify-between">
+        <main className="flex flex-col items-center justify-between pt-10 py-2">
         <div className="z-10 items-center justify-between font-mono text-sm lg:flex">
             
         <div>
         <Card className="bg-gradient-to-b from-pink-100">
-                    <Box sx={{ width: "80%", justifyContent: "centre", alignItems: 'center', margin:"auto", marginTop :"10px"}} className="from-blue-300 flex min-h-screen flex-col items-center justify-between">
+                    <Box sx={{ width: "80%", justifyContent: "centre", alignItems: 'center', margin:"auto", marginTop :"10px"}} className="from-blue-300 flex flex-col items-center justify-between">
                         
                         <Box component="form" onSubmit={handleSubmitQuestion} className="from-blue-300">
                             <TextField
