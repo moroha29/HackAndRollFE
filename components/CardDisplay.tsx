@@ -75,8 +75,9 @@ return(
               <MoreVertIcon />
             </IconButton>
           }
-          title="Example 1"
-          subheader="Jan 20, 2024"
+          subheader={questionData.questionText}
+          //title="Example 1"
+          //subheader="Jan 20, 2024"
         />
         <CardContent>
 
@@ -84,10 +85,10 @@ return(
       <div>
         
           <div key={questionData._id}>
-            <Typography variant="body2" color="text.secondary">
+            {/* <Typography variant="body2" color="text.secondary">
               {questionData.questionText}
             </Typography>
-            
+             */}
             <ChoiceList
             choices={questionData.choices}
             onChoiceSelect={(selectedChoiceIds) => handleChoiceSelect(selectedChoiceIds, questionData)}
