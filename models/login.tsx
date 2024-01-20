@@ -80,4 +80,6 @@ export interface QuestionData {
     question: string;
     options: string[];
     answers: Answer[];
+
+    comments: []
 }

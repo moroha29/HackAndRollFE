@@ -6,7 +6,6 @@ import { QuestionData } from "@/models/login";
 import ResultsComponent from "@/components/ResultsComponent";
 import CardDisplay from "@/components/CardDisplay";
 import Navbar from '@/components/NavBar';
-
 const ResultsPage = () => {
     const [questions, setQuestions] = useState<QuestionData[]>([]);
     const [loading, setLoading] = useState(true);
@@ -46,7 +45,7 @@ const ResultsPage = () => {
 
     if (loading) {
         return (
-            <Card sx={{ margin: '20px', padding: '20px' }}>
+            <Card className="flex bg-gradient-to-b from-pink-100 min-h-screen flex-col items-center justify-between" >
                 <Box display="flex" justifyContent="center" alignItems="center" height="80vh">
                     <CircularProgress />
                 </Box>
@@ -59,8 +58,8 @@ const ResultsPage = () => {
     }
 
     return (
-        <Box>
-            <div className="grid grid-cols-1 gap-1 xl:grid-cols-2">
+        <Box    >
+            <div className="bg-gradient-to-b from-pink-100 grid grid-cols-1 gap-1 xl:grid-cols-2">
             {questions.map(question => (
                 <Card key={question._id} sx={{ margin: '20px', padding: '20px' }}>
                     {!submittedQuestions.includes(question._id) && <CardDisplay questionData={question} handleSubmit={() => handleSubmission(question)} />}
