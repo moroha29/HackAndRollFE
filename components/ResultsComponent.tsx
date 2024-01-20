@@ -27,8 +27,8 @@ import {
     ListItemText,
     Button
 } from '@mui/material';
-import {QuestionData} from "@/models/login";
 import TextField from "@mui/material/TextField";
+import {QuestionData} from "@/models/login";
 
 interface ResultsComponentProps {
     data: QuestionData;
