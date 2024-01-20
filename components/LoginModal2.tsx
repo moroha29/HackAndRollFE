@@ -47,6 +47,10 @@ const marital_status = [
     value: 'Single',
     label: 'Single',
 },
+    {
+        value: 'Attached',
+        label: 'Attached',
+    },
 {
     value: 'Married',
     label: 'Married',
