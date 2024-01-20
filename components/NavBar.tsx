@@ -16,7 +16,7 @@ function Navbar() {
                 setValue(newValue);
             }}
         >
-            <BottomNavigationAction label="Answer Qns" icon={<QuestionAnswerIcon />} href="/question" />
+            <BottomNavigationAction label="Answer Qns" icon={<QuestionAnswerIcon />} href="/dashboard" />
             <BottomNavigationAction label="Generate Qns" icon={<AddCircleOutlineIcon />} href="/generate"/>
             <BottomNavigationAction label="Like" icon={<ThumbUpIcon />} />
         </BottomNavigation>

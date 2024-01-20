@@ -5,6 +5,7 @@ import { Box, Card, CircularProgress, Typography } from '@mui/material';
 import { QuestionData } from "@/models/login";
 import ResultsComponent from "@/components/ResultsComponent";
 import CardDisplay from "@/components/CardDisplay";
+import Navbar from '@/components/NavBar';
 
 const ResultsPage = () => {
     const [questions, setQuestions] = useState<QuestionData[]>([]);
@@ -65,6 +66,7 @@ const ResultsPage = () => {
                     {submittedQuestions.includes(question._id) && <ResultsComponent data={question} />}
                 </Card>
             ))}
+            <Navbar/>
         </Box>
     );
 };
