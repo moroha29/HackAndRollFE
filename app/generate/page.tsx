@@ -3,15 +3,15 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {Card, IconButton} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
-import PsychologyIcon from '@mui/icons-material/Psychology';
+import DeleteIcon from "@material-ui/icons/Delete";
+import AddIcon from "@material-ui/icons/Add";
+import SettingsIcon from '@material-ui/icons/Settings';
 export default function SimpleBottomNavigation() {
     const [value, setValue] = useState(0);
     const [question, setQuestion] = useState('');
@@ -127,7 +127,7 @@ export default function SimpleBottomNavigation() {
                 <Button startIcon={<AddIcon />} onClick={handleAddOption} variant="outlined">
                     Add Option
                 </Button>
-                <Button startIcon={<PsychologyIcon />} variant="outlined" color="primary" onClick={handleSuggestQuery}>
+                <Button startIcon={<SettingsIcon />} variant="outlined" color="primary" onClick={handleSuggestQuery}>
                     Suggest Query
                 </Button>
                 <Button type="submit" variant="outlined" color="secondary">
