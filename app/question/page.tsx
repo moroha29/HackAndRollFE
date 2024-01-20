@@ -77,16 +77,22 @@ const QuestionPage = () => {
   return (
     <div>
 
-<div>
-      {mappedQuestionData.map((question, index) => (
-        <CardDisplay
-          key={index}
-          questionData={question}
-          handleChoiceSelect={handleChoiceSelect}
-          handleSubmit={handleSubmit}
-        />
-      ))}
-    </div>
+    <main className="flex min-h-screen flex-col items-center justify-between p-10">
+      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
+        
+    <div>
+          {mappedQuestionData.map((question, index) => (
+            <CardDisplay
+              key={index}
+              questionData={question}
+              handleChoiceSelect={handleChoiceSelect}
+              handleSubmit={handleSubmit}
+            />
+          ))}
+        </div>
+        </div>
+        
+    </main>
     </div>
 
   );

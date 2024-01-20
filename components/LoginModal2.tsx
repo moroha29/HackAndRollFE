@@ -180,9 +180,9 @@ export default function FormDialog() {
 
     return (
       <React.Fragment>
-          <Button variant="outlined" onClick={handleOpen}>
+          {/* <Button variant="outlined" onClick={handleOpen}>
               Open form dialog
-          </Button>
+          </Button> */}
           <Dialog open={open} onClose={handleClose}>
               <DialogTitle>Paiseh Questions</DialogTitle>
               <DialogContent>
