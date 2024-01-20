@@ -68,7 +68,7 @@ const CardDisplay: React.FC<CardDisplayProps> = ({questionData, handleChoiceSele
     }
   }
 return(
-  <Card >
+  <Card style={{ marginBottom: '22px' }}>
         <CardHeader
           action={
             <IconButton aria-label="settings">
