@@ -2,8 +2,8 @@
   import { useState, useEffect } from 'react';
 import * as React from 'react';
 import CardDisplay from '@/components/CardDisplay';
-
-
+import Box from "@mui/material/Box";
+import Navbar from "@/components/NavBar";
 
 const QuestionPage = () => {
   const [questionData, setQuestionData] = useState<Array<{ _id: string; questionText: string; choices: Array<{ id: string; text: string }> }>>([]);
@@ -90,6 +90,9 @@ const QuestionPage = () => {
         </div>
         
     </main>
+    <Box sx={{ width: "100%" }} className="fixed z-10 bottom-0">
+                <Navbar />
+            </Box>
     </div>
 
   );

@@ -3,21 +3,29 @@ import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import Link from '@mui/material/Link';
 
 function Navbar() {
     const [value, setValue] = useState(0);
 
     return (
         <BottomNavigation
-            showLabels
             value={value}
+            showLabels
             onChange={(event, newValue) => {
                 setValue(newValue);
             }}
         >
-            <BottomNavigationAction label="Answer Qns" icon={<QuestionAnswerIcon />} />
-            <BottomNavigationAction label="Generate Qns" icon={<AddCircleOutlineIcon />} />
-            <BottomNavigationAction label="Like" icon={<ThumbUpIcon />} />
+
+            <Link href="question">
+                <BottomNavigationAction label="Answer Qns" icon={<QuestionAnswerIcon />} />
+            </Link>
+            <Link href="generate">
+                <BottomNavigationAction label="Generate Qns" icon={<AddCircleOutlineIcon />} />
+            </Link>
+            <Link href="">
+                <BottomNavigationAction label="Like" icon={<ThumbUpIcon />} />
+            </Link>
         </BottomNavigation>
     );
 }
