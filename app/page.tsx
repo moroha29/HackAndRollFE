@@ -2,7 +2,8 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Navbar from "@/components/NavBar";
-import FormDialog from "@/components/LoginModal2";
+import RegisterForm from "@/components/LoginModal2";
+import LoginForm from "@/components/LoginModal";
 
 export default function SimpleBottomNavigation() {
     return (
@@ -12,7 +13,8 @@ export default function SimpleBottomNavigation() {
                     <div className="group rounded-lg border border-transparent px-5 py-4">
                         <h1 className={`mb-3 text-6xl font-semibold`}>MewTwo</h1>
                         <p className={`m-0 mb-3 text-l opacity-50`}>AI-powered degeneracy, brought to you by degenerates.</p>
-                        <FormDialog />
+                        <div className="xl:columns-3 mb-3 mt-8 "><LoginForm /></div>
+                        <div className="xl:columns-3 "><RegisterForm /></div>
                     </div>
                 </div>
             </main>

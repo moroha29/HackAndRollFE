@@ -8,74 +8,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import { RegisterData,marital_status,age_range,gender } from '@/models/login';
 
-const gender = [
-    {
-      value: 'male',
-      label: 'Male',
-    },
-    {
-      value: 'female',
-      label: 'Female',
-    },
-    {
-      value: 'nonbinary',
-      label: 'Non-Binary',
-    },
-];
 
-const age_range = [
-    {
-        'value': '<18',
-        'label': '<18',
-    },
-    {
-        'value': '18-24',
-        'label': '18-24',
-    },
-    {
-        'value': '25-29',
-        'label': '25-29',
-    },
-    {
-        'value': '30-39',
-        'label': '30-39',
-    },
-    {
-        'value': '40-49',
-        'label': '40-49',
-    },
-    {
-        'value': '50+',
-        'label': '50+',
-    },
-]
-
-const marital_status = [
-{
-    value: 'single',
-    label: 'single',
-},
-    {
-        value: 'attached',
-        label: 'attached',
-    },
-{
-    value: 'married',
-    label: 'married',
-}
-];
-interface FormData {
-    username: string;
-    password: string;
-    age_range: string;
-    gender: string;
-    marital_status: string;
-}
-
-export default function FormDialog() {
+export default function RegisterForm() {
     const [open, setOpen] = useState(false);
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<RegisterData>({
         username: '',
         password: '',
         age_range: '',
@@ -96,43 +34,7 @@ export default function FormDialog() {
         const { name, value } = event.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-    const handleLogin = async (event: FormEvent) => {
-        event.preventDefault();
-        const loginPayload = {
-            "name": formData.username,
-            "hashed_password": formData.password,
-        };
 
-        try {
-            const response = await fetch(`http://localhost:8000/users/login/`, { // Replace with your login endpoint
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(loginPayload),
-            });
-            console.log(loginPayload);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            console.log(data)
-            // Assuming the JWT token is in the 'token' field of the response
-            const token = data
-            if (token) {
-                console.log("Received JWT Token:", token);
-                // Store the token in localStorage or sessionStorage
-                localStorage.setItem('jwtToken', token);
-                // You can now use this token for authenticated requests to your backend
-            }
-
-            handleClose();
-        } catch (error) {
-            console.error('Error during login:', error);
-        }
-    };
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         console.log(formData); // For debugging
@@ -180,14 +82,14 @@ export default function FormDialog() {
 
     return (
       <React.Fragment>
-          <Button variant="outlined" onClick={handleOpen}>
-              Let&apos;s go!
+          <Button className='w-48 shadow-2xl bg-sky-500 text-white' variant="outlined" onClick={handleOpen}>
+              Create Account!
           </Button>
           <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Paiseh Questions</DialogTitle>
+              <DialogTitle>Welcome to Paiseh Questions</DialogTitle>
               <DialogContent>
                   <DialogContentText>
-                      To access the application, you will need to fill up the following details.
+                      To create an account, you will need to fill up the following details.
                   </DialogContentText>
                   <TextField
                       autoFocus
@@ -276,9 +178,8 @@ export default function FormDialog() {
             
         </DialogContent>
               <DialogActions>
-                  <Button onClick={handleClose}>I already have an account</Button>
-                  <Button onClick={handleLogin}>Login</Button> {/* Login button */}
-                  <Button onClick={handleSubmit}>Next</Button>
+                  <Button onClick={handleSubmit}>Create Account</Button>
+                  <Button onClick={handleClose}>Cancel</Button>
               </DialogActions>
       </Dialog>
     </React.Fragment>
