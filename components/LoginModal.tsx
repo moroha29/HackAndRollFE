@@ -1,90 +1,286 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import MenuItem from '@mui/material/MenuItem';
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+const gender = [
+    {
+      value: 'male',
+      label: 'Male',
+    },
+    {
+      value: 'female',
+      label: 'Female',
+    },
+    {
+      value: 'nonbinary',
+      label: 'Non-Binary',
+    },
+];
 
-export default function LoginModal() {
-    const [open, setOpen] = React.useState(true);
+const age_range = [
+    {
+        'value': '<18',
+        'label': '<18',
+    },
+    {
+        'value': '18-24',
+        'label': '18-24',
+    },
+    {
+        'value': '25-29',
+        'label': '25-29',
+    },
+    {
+        'value': '30-39',
+        'label': '30-39',
+    },
+    {
+        'value': '40-49',
+        'label': '40-49',
+    },
+    {
+        'value': '50+',
+        'label': '50+',
+    },
+]
+
+const marital_status = [
+{
+    value: 'single',
+    label: 'single',
+},
+    {
+        value: 'attached',
+        label: 'attached',
+    },
+{
+    value: 'married',
+    label: 'married',
+}
+];
+interface FormData {
+    username: string;
+    password: string;
+    age_range: string;
+    gender: string;
+    marital_status: string;
+}
+
+export default function FormDialog() {
+    const [open, setOpen] = useState(false);
+    const [formData, setFormData] = useState<FormData>({
+        username: '',
+        password: '',
+        age_range: '',
+        gender: '',
+        marital_status: '',
+    });
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    useEffect(() => {
+        const token = localStorage.getItem('jwtToken');
+        if (token) {
+            console.log("token detected")
+            handleClose();
+        }
+    }, []);
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+    const handleLogin = async (event: FormEvent) => {
+        event.preventDefault();
+        const loginPayload = {
+            "name": formData.username,
+            "hashed_password": formData.password,
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8000/users/login/`, { // Replace with your login endpoint
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginPayload),
+            });
+            console.log(loginPayload);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            console.log(data)
+            // Assuming the JWT token is in the 'token' field of the response
+            const token = data
+            if (token) {
+                console.log("Received JWT Token:", token);
+                // Store the token in localStorage or sessionStorage
+                localStorage.setItem('jwtToken', token);
+                // You can now use this token for authenticated requests to your backend
+            }
+
+            handleClose();
+        } catch (error) {
+            console.error('Error during login:', error);
+        }
+    };
+    const handleSubmit = async (event: FormEvent) => {
+        event.preventDefault();
+        console.log(formData); // For debugging
+        const payload = {
+            name: formData.username,
+            hashed_password: formData.password,
+            age_range: formData.age_range,
+            gender: formData.gender,
+            marital_status: formData.marital_status,
+        };
+        try {
+
+            const response = await fetch(`http://localhost:8000/users/register/`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                console.log(response)
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
+            // Assuming the JWT token is in the 'token' field of the response
+            const token = data.token;
+            if (token) {
+                console.log("Received JWT Token:", token);
+                // Store the token in localStorage or sessionStorage
+                localStorage.setItem('jwtToken', token);
+                // You can now use this token for authenticated requests to your backend
+
+            }
+
+            handleClose();
+        } catch (error) {
+            console.error('Error sending registration data:', error);
+        }
+    };
+
+
     return (
-        <div>
-            <Button onClick={handleOpen}>Open modal</Button>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Box
-                        component="form"
-                        sx={{
-                            '& .MuiTextField-root': { m: 1, width: '25ch' },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <div>
-                            <TextField
-                                required
-                                id="outlined-required"
-                                label="Required"
-                                defaultValue="Hello World"
-                            />
-                            <TextField
-                                disabled
-                                id="outlined-disabled"
-                                label="Disabled"
-                                defaultValue="Hello World"
-                            />
-                            <TextField
-                                id="outlined-password-input"
-                                label="Password"
-                                type="password"
-                                autoComplete="current-password"
-                            />
-                            <TextField
-                                id="outlined-read-only-input"
-                                label="Read Only"
-                                defaultValue="Hello World"
-                                InputProps={{
-                                    readOnly: true,
-                                }}
-                            />
-                            <TextField
-                                id="outlined-number"
-                                label="Number"
-                                type="number"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                            <TextField id="outlined-search" label="Search field" type="search" />
-                            <TextField
-                                id="outlined-helperText"
-                                label="Helper text"
-                                defaultValue="Default Value"
-                                helperText="Some important text"
-                            />
-                        </div>
-                    <Button variant="text" onClick={handleClose}>SUBMIT</Button>
-                </Box>
-                </Box>
-            </Modal>
-        </div>
-    );
+      <React.Fragment>
+          <Button variant="outlined" onClick={handleOpen}>
+              Let&apos;s go!
+          </Button>
+          <Dialog open={open} onClose={handleClose}>
+              <DialogTitle>Paiseh Questions</DialogTitle>
+              <DialogContent>
+                  <DialogContentText>
+                      To access the application, you will need to fill up the following details.
+                  </DialogContentText>
+                  <TextField
+                      autoFocus
+                      required
+                      margin="dense"
+                      id="name"
+                      name="username"
+                      label="Name"
+                      type="text"
+                      fullWidth
+                      variant="standard"
+                      onChange={handleChange}
+                  />
+            <TextField
+                autoFocus
+                required
+                margin="dense"
+                id="hashed_password"
+                name="password"
+                label="Password"
+                type="password"
+                fullWidth
+                variant="standard"
+                onChange={handleChange}
+            />
+            
+            <TextField
+                autoFocus
+                required
+                margin="dense"
+                id="demo-simple-select"
+                select
+                label="Age Range"
+                helperText="Please select your age range"
+                fullWidth
+                variant = "standard"
+                name = "age_range"
+                onChange={handleChange}
+                >
+                {age_range.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
+
+            <TextField
+                autoFocus
+                required
+                margin="dense"
+                id="demo-simple-select"
+                name="gender"
+                label="Gender"
+                fullWidth
+                variant="standard"
+                select
+                helperText="Please select your gender"
+                onChange={handleChange}
+                >
+                {gender.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
+
+            <TextField
+                autoFocus
+                required
+                margin="dense"
+                id="demo-simple-select"
+                name="marital_status"
+                label="Marital Status"
+                fullWidth
+                variant="standard"
+                select
+                helperText="Please select your marital status"
+                onChange={handleChange}
+                >
+                {marital_status.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                    </MenuItem>
+                ))}
+            </TextField>
+            
+        </DialogContent>
+              <DialogActions>
+                  <Button onClick={handleClose}>I already have an account</Button>
+                  <Button onClick={handleLogin}>Login</Button> {/* Login button */}
+                  <Button onClick={handleSubmit}>Next</Button>
+              </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
 }

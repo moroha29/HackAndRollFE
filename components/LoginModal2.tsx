@@ -145,7 +145,7 @@ export default function FormDialog() {
         };
         try {
 
-            const response = await fetch(`http://localhost:8000/users/login/`, {
+            const response = await fetch(`http://localhost:8000/users/register/`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
