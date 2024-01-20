@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import { LoginData} from '@/models/login';
 import { Snackbar } from '@mui/material';
+import { redirect } from 'next/navigation';
 
 
 
@@ -81,6 +82,7 @@ export default function LoginForm() {
                 // Store the token in localStorage or sessionStorage
                 localStorage.setItem('jwtToken', token);
                 // You can now use this token for authenticated requests to your backend
+                redirect("/question");
             }
 
             handleClose();
