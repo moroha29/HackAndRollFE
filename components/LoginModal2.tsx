@@ -103,13 +103,12 @@ export default function FormDialog() {
         };
         try {
 
-            const response = await fetch('https://har2024.jinwei.dev/users/register/', {
+            const response = await fetch('http://localhost:8000/users/register/', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                mode: 'no-cors',
                 body: JSON.stringify(payload),
             });
 
