@@ -1,33 +1,38 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ChoiceList from '@/components/ChoiceList';
-import { Container, Typography, Button } from '@mui/material';
-import Box from "@mui/material/Box";
-
+import { Typography, Button } from '@mui/material';
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import { red } from '@mui/material/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import QuestionData from './QuestionData';
-// code added for card
+
+interface Choice {
+  id: string;
+  text: string;
+}
+
+interface Question {
+  _id: string;
+  questionText: string;
+  choices: Choice[];
+}
+
 interface CardDisplayProps {
-  questionData: QuestionData | null;
-  handleChoiceSelect: (choiceIds: string[]) => void;
-  handleSubmit: () => Promise<void>;
+  questionData: Question;
+  handleChoiceSelect: (selectedChoiceIds: string[], question: Question) => void;
+  handleSubmit: (question: { _id: string; questionText: string; choices: { id: string; text: string }[] }) => Promise<void>;
 }
 
 const CardDisplay: React.FC<CardDisplayProps> = ({questionData, handleChoiceSelect, handleSubmit}) => {
-//export default function CardDisplay() {
+  
   interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
   }
@@ -50,12 +55,13 @@ const CardDisplay: React.FC<CardDisplayProps> = ({questionData, handleChoiceSele
   }));
 
   const [isClicked, setIsClicked] = useState(false);
-  const handleClick = async () => {
+  const handleClick = async (question: Question) => {
     if (isClicked == true) {
       return;
     }
     try {
-      await handleSubmit();
+      const { _id, questionText, choices } = question;
+    await handleSubmit({ _id, questionText, choices });
       setIsClicked(true);
     } catch (error) {
       console.error('Error handling click:', error);
@@ -73,21 +79,27 @@ return(
           subheader="Jan 20, 2024"
         />
         <CardContent>
-        <Typography variant="body2" color="text.secondary">
-             {questionData ? questionData.questionText : 'Loading question...'}
-           </Typography>
-          
-           {questionData && (
-               <>
-                 <ChoiceList choices={questionData.choices} onChoiceSelect={handleChoiceSelect} />
-                
-                 <Button color="primary" 
-                  disabled = {isClicked} 
-                  onClick={handleClick}>
-                   Submit
-                 </Button>
-               </>
-           )}
+
+        
+      <div>
+        
+          <div key={questionData._id}>
+            <Typography variant="body2" color="text.secondary">
+              {questionData.questionText}
+            </Typography>
+            
+            <ChoiceList
+            choices={questionData.choices}
+            onChoiceSelect={(selectedChoiceIds) => handleChoiceSelect(selectedChoiceIds, questionData)}
+            />
+
+            <Button color="primary" disabled={isClicked} onClick={() => handleClick(questionData)}>
+              Submit
+            </Button>
+          </div>
+      </div>
+
+           
         </CardContent>
         <CardActions disableSpacing>
           <IconButton aria-label="add to favorites">
