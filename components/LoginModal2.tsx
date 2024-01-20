@@ -9,7 +9,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 
-
 const gender = [
     {
       value: 'male',
@@ -83,14 +82,13 @@ export default function FormDialog() {
         gender: '',
         marital_status: '',
     });
-
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
         if (token) {
             console.log("token detected")
-            setOpen(false); // If token exists, do not open the dialog
+            handleClose();
         }
     }, []);
 
@@ -170,6 +168,7 @@ export default function FormDialog() {
                 // Store the token in localStorage or sessionStorage
                 localStorage.setItem('jwtToken', token);
                 // You can now use this token for authenticated requests to your backend
+
             }
 
             handleClose();
