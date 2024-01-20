@@ -30,7 +30,7 @@ const ChoiceList: React.FC<ChoiceListProps> = ({ choices, onChoiceSelect }) => {
         <FormGroup>
             {choices.map((choice) => (
 
-                <FormControlLabel
+                <FormControlLabel className='text-base'
                     key={choice.id}
                     control={
                         <Checkbox
