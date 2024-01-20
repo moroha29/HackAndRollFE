@@ -74,7 +74,7 @@ interface FormData {
 }
 
 export default function FormDialog() {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const [formData, setFormData] = useState<FormData>({
         username: '',
         password: '',
@@ -180,9 +180,9 @@ export default function FormDialog() {
 
     return (
       <React.Fragment>
-          {/* <Button variant="outlined" onClick={handleOpen}>
-              Open form dialog
-          </Button> */}
+          <Button variant="outlined" onClick={handleOpen}>
+              Let&apos;s go!
+          </Button>
           <Dialog open={open} onClose={handleClose}>
               <DialogTitle>Paiseh Questions</DialogTitle>
               <DialogContent>
