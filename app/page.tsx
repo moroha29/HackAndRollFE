@@ -4,8 +4,16 @@ import Box from "@mui/material/Box";
 import Navbar from "@/components/NavBar";
 import RegisterForm from "@/components/LoginModal2";
 import LoginForm from "@/components/LoginModal";
+import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 
 export default function SimpleBottomNavigation() {
+    useEffect(()=>{
+        const token = localStorage.getItem('jwtToken');
+        if (token) {
+            redirect("/question");
+        }
+    },[])
     return (
         <div>
             <main className="flex min-h-screen flex-col items-center justify-between p-24">
