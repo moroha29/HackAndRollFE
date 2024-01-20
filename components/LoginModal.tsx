@@ -6,81 +6,16 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import MenuItem from '@mui/material/MenuItem';
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import { LoginData} from '@/models/login';
 
-const gender = [
-    {
-      value: 'male',
-      label: 'Male',
-    },
-    {
-      value: 'female',
-      label: 'Female',
-    },
-    {
-      value: 'nonbinary',
-      label: 'Non-Binary',
-    },
-];
 
-const age_range = [
-    {
-        'value': '<18',
-        'label': '<18',
-    },
-    {
-        'value': '18-24',
-        'label': '18-24',
-    },
-    {
-        'value': '25-29',
-        'label': '25-29',
-    },
-    {
-        'value': '30-39',
-        'label': '30-39',
-    },
-    {
-        'value': '40-49',
-        'label': '40-49',
-    },
-    {
-        'value': '50+',
-        'label': '50+',
-    },
-]
 
-const marital_status = [
-{
-    value: 'single',
-    label: 'single',
-},
-    {
-        value: 'attached',
-        label: 'attached',
-    },
-{
-    value: 'married',
-    label: 'married',
-}
-];
-interface FormData {
-    username: string;
-    password: string;
-    age_range: string;
-    gender: string;
-    marital_status: string;
-}
-
-export default function FormDialog() {
+export default function LoginForm() {
     const [open, setOpen] = useState(false);
-    const [formData, setFormData] = useState<FormData>({
+    const [formData, setFormData] = useState<LoginData>({
         username: '',
         password: '',
-        age_range: '',
-        gender: '',
-        marital_status: '',
     });
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -133,153 +68,47 @@ export default function FormDialog() {
             console.error('Error during login:', error);
         }
     };
-    const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault();
-        console.log(formData); // For debugging
-        const payload = {
-            name: formData.username,
-            hashed_password: formData.password,
-            age_range: formData.age_range,
-            gender: formData.gender,
-            marital_status: formData.marital_status,
-        };
-        try {
-
-            const response = await fetch(`http://localhost:8000/users/register/`, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (!response.ok) {
-                console.log(response)
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-
-            // Assuming the JWT token is in the 'token' field of the response
-            const token = data.token;
-            if (token) {
-                console.log("Received JWT Token:", token);
-                // Store the token in localStorage or sessionStorage
-                localStorage.setItem('jwtToken', token);
-                // You can now use this token for authenticated requests to your backend
-
-            }
-
-            handleClose();
-        } catch (error) {
-            console.error('Error sending registration data:', error);
-        }
-    };
-
 
     return (
       <React.Fragment>
-          <Button variant="outlined" onClick={handleOpen}>
-              Let&apos;s go!
+          <Button className="w-48 shadow-2xl bg-sky-500 text-white" variant="outlined" onClick={handleOpen} >
+              Login!
           </Button>
           <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Paiseh Questions</DialogTitle>
+              <DialogTitle>Welcome to Paiseh Questions</DialogTitle>
               <DialogContent>
-                  <DialogContentText>
-                      To access the application, you will need to fill up the following details.
-                  </DialogContentText>
-                  <TextField
-                      autoFocus
-                      required
-                      margin="dense"
-                      id="name"
-                      name="username"
-                      label="Name"
-                      type="text"
-                      fullWidth
-                      variant="standard"
-                      onChange={handleChange}
-                  />
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="hashed_password"
-                name="password"
-                label="Password"
-                type="password"
-                fullWidth
-                variant="standard"
-                onChange={handleChange}
-            />
-            
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="demo-simple-select"
-                select
-                label="Age Range"
-                helperText="Please select your age range"
-                fullWidth
-                variant = "standard"
-                name = "age_range"
-                onChange={handleChange}
-                >
-                {age_range.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
-
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="demo-simple-select"
-                name="gender"
-                label="Gender"
-                fullWidth
-                variant="standard"
-                select
-                helperText="Please select your gender"
-                onChange={handleChange}
-                >
-                {gender.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
-
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="demo-simple-select"
-                name="marital_status"
-                label="Marital Status"
-                fullWidth
-                variant="standard"
-                select
-                helperText="Please select your marital status"
-                onChange={handleChange}
-                >
-                {marital_status.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
-            
-        </DialogContent>
-              <DialogActions>
-                  <Button onClick={handleClose}>I already have an account</Button>
-                  <Button onClick={handleLogin}>Login</Button> {/* Login button */}
-                  <Button onClick={handleSubmit}>Next</Button>
-              </DialogActions>
+                <DialogContentText>
+                    To access the application, please fill in your username and password.
+                </DialogContentText>
+                <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="name"
+                    name="username"
+                    label="Name"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+                    onChange={handleChange}
+                />
+                <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="hashed_password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    variant="standard"
+                    onChange={handleChange}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleLogin}>Login</Button> {/* Login button */}
+                <Button onClick={handleClose}>Cancel</Button> {/* Close button */}
+            </DialogActions>
       </Dialog>
     </React.Fragment>
   );
