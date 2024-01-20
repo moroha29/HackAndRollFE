@@ -1,8 +1,8 @@
 // Path/Filename: /components/ChoiceList.tsx
-// Purpose: Create a TypeScript component to render a list of multiple choice options.
+// Purpose: Update the ChoiceList component to render choices as selectable checkboxes.
 
-import React from 'react';
-import { List, ListItem, ListItemText } from '@mui/material';
+import React, { useState } from 'react';
+import { FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 
 interface Choice {
     id: string;
@@ -11,17 +11,37 @@ interface Choice {
 
 interface ChoiceListProps {
     choices: Choice[];
+    onChoiceSelect: (selectedChoiceIds: string[]) => void;
 }
 
-const ChoiceList: React.FC<ChoiceListProps> = ({ choices }) => {
+const ChoiceList: React.FC<ChoiceListProps> = ({ choices, onChoiceSelect }) => {
+    const [selectedChoices, setSelectedChoices] = useState<string[]>([]);
+
+    const handleChoiceSelect = (event: React.ChangeEvent<HTMLInputElement>, choiceId: string) => {
+        const newSelectedChoices = event.target.checked
+            ? [...selectedChoices, choiceId]
+            : selectedChoices.filter(id => id !== choiceId);
+
+        setSelectedChoices(newSelectedChoices);
+        onChoiceSelect(newSelectedChoices);
+    };
+
     return (
-        <List>
+        <FormGroup>
             {choices.map((choice) => (
-                <ListItem key={choice.id}>
-                    <ListItemText primary={choice.text} />
-                </ListItem>
+
+                <FormControlLabel
+                    key={choice.id}
+                    control={
+                        <Checkbox
+                            checked={selectedChoices.includes(choice.id)}
+                            onChange={(event) => handleChoiceSelect(event, choice.id)}
+                        />
+                    }
+                    label={choice.text}
+                />
             ))}
-        </List>
+        </FormGroup>
     );
 };
 
