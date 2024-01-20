@@ -45,7 +45,8 @@ export default function SimpleBottomNavigation() {
             }
 
             const data = await response.json();
-            setQuestion(data.suggestedQuery); // Update the question with the suggested query
+            setQuestion(data.question); // Update the question
+            setOptions(data.options); // Update the options
         } catch (error) {
             console.error('Error fetching suggested query:', error);
         }
