@@ -15,7 +15,7 @@ export default function SimpleBottomNavigation() {
         }
     },[])
     return (
-        <div>
+        <div className="bg-gradient-to-b from-pink-100">
             <main className="flex min-h-screen flex-col items-center justify-between p-24">
                 <div className="mb-32 grid text-center lg:text-left lg:mr-[20em]">
                     <div className="group rounded-lg border border-transparent px-5 py-4">
