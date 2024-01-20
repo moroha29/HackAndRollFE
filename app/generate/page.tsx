@@ -98,7 +98,7 @@ export default function SimpleBottomNavigation() {
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     margin="normal"
-                    variant="outlined"
+                    variant="filled"
                 />
                 {options.map((option, index) => (
                     <Box key={index} display="flex" alignItems="center" gap={2}>
@@ -108,6 +108,7 @@ export default function SimpleBottomNavigation() {
                             value={option}
                             onChange={handleOptionChange(index)}
                             variant="outlined"
+                            sx={{ my: 0.5 }}
                         />
                         <IconButton onClick={() => handleRemoveOption(index)} color="error">
                             <DeleteIcon />
