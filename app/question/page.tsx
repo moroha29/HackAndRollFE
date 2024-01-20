@@ -62,15 +62,6 @@ const QuestionPage = () => {
     }
   };
 
-  const mappedQuestionData = questionData.map(question => ({
-    _id: question._id,
-    questionText: question.questionText,
-    choices: question.choices.map(choice => ({
-      id: choice.id,
-      text: choice.text
-    }))
-  }));
-
   return (
     <div>
 
@@ -78,14 +69,12 @@ const QuestionPage = () => {
       <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
         
     <div>
-          {mappedQuestionData.map((question, index) => (
             <CardDisplay
               key={index}
               questionData={question}
               handleChoiceSelect={handleChoiceSelect}
               handleSubmit={handleSubmit}
             />
-          ))}
         </div>
         </div>
         

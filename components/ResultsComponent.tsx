@@ -15,20 +15,7 @@ import {
     Cell
 } from 'recharts';
 import { Tabs, Tab, Box, Typography, Card } from '@mui/material';
-
-interface Answer {
-    user_id: string;
-    option: string;
-    age_range: string;
-    gender: string;
-    marital_status: string;
-}
-
-interface QuestionData {
-    question: string;
-    options: string[];
-    answers: Answer[];
-}
+import {QuestionData} from "@/models/login";
 
 interface ResultsComponentProps {
     data: QuestionData;

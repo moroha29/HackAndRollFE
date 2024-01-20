@@ -67,3 +67,17 @@ export class LoginData {
     "username": string;
     "password": string;
 }
+export interface Answer {
+    user_id: string;
+    option: string;
+    age_range: string;
+    gender: string;
+    marital_status: string;
+}
+
+export interface QuestionData {
+    _id: string
+    question: string;
+    options: string[];
+    answers: Answer[];
+}
