@@ -9,30 +9,27 @@ const QuestionPage = () => {
   const [questionData, setQuestionData] = useState<Array<{ _id: string; questionText: string; choices: Array<{ id: string; text: string }> }>>([]);
     const [selectedChoices, setSelectedChoices] = useState<string[]>([]);
   const fetchQuestionData = async () => {
-    const response = {
-      data: [
-        {
-          _id:"1",
-          questionText: "Have you entered a hackathon before?",
-          choices: [
-            { id: "1", text: "Yes" },
-            { id: "2", text: "No" },
-            { id: "3", text: "Maybe" }
-          ]
-        }, 
-        {
-          _id:"2",
-          questionText: "Have you given up during a hackathon before?",
-          choices: [
-            { id: "1", text: "Yes" },
-            { id: "2", text: "No" },
-            { id: "3", text: "Definitely" }
-          ]
-        }, 
-      ]
-    };
-
-    setQuestionData(response.data);
+    const token = localStorage.getItem('jwtToken');
+    try {
+        const response = await fetch('http://localhost:8000/questions/random/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            }
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        } 
+        const data = await response.json();
+        console.log(data)
+        const dataObject = {
+          data: [data]
+        };
+        setQuestionData(dataObject.data);
+    } catch (error) {
+        console.error('Error fetching suggested query:', error);
+    }
   };useEffect(() => {
     fetchQuestionData();
   }, []);
