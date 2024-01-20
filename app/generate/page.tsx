@@ -89,8 +89,6 @@ export default function SimpleBottomNavigation() {
 
     return (
         <Card>
-        <Box sx={{ width: "100%" }}>
-            <Navbar/>
             <Box component="form" onSubmit={handleSubmitQuestion}>
                 <TextField
                     fullWidth
@@ -99,6 +97,8 @@ export default function SimpleBottomNavigation() {
                     onChange={(e) => setQuestion(e.target.value)}
                     margin="normal"
                     variant="filled"
+                    multiline
+                    className='mb-5'
                 />
                 {options.map((option, index) => (
                     <Box key={index} display="flex" alignItems="center" gap={2}>
@@ -115,17 +115,23 @@ export default function SimpleBottomNavigation() {
                         </IconButton>
                     </Box>
                 ))}
-                <Button startIcon={<AddIcon />} onClick={handleAddOption} variant="outlined">
-                    Add Option
-                </Button>
-                <Button startIcon={<SettingsIcon />} variant="outlined" color="primary" onClick={handleSuggestQuery}>
-                    Suggest Query
-                </Button>
-                <Button type="submit" variant="outlined" color="secondary">
-                    Submit Question
-                </Button>
+                <div className='columns-12 mt-3'>
+                    <Button startIcon={<AddIcon />} onClick={handleAddOption} variant="outlined">
+                        Add Option
+                    </Button>
+                </div>
+                <div className='columns-12 mt-3'>
+                    <Button startIcon={<SettingsIcon />} variant="outlined" color="primary" onClick={handleSuggestQuery}>
+                        Suggest Query
+                    </Button>
+                </div>
+                <div className='columns-12 mt-3 mb-5'>
+                    <Button type="submit" variant="outlined" color="secondary">
+                        Submit Question
+                    </Button>
+                </div>
             </Box>
-        </Box>
-        </Card>
+        <Navbar/>
+    </Card>
     );
 }
