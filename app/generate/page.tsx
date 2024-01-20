@@ -91,54 +91,54 @@ export default function SimpleBottomNavigation() {
 
         <div className='bg-black h-screen'>
 
-        <main className="flex flex-col items-center justify-between p-12">
+        <main className="flex min-h-screen flex-col items-center justify-between">
         <div className="z-10 items-center justify-between font-mono text-sm lg:flex">
             
         <div>
-        <Card >
-            <Box sx={{ width: "80%", justifyContent: "centre", alignItems: 'center', margin:"auto", marginTop :"10px"}} className="flex flex-col items-center justify-between">
-                
-                <Box component="form" onSubmit={handleSubmitQuestion}>
-                    <TextField
-                        fullWidth
-                        label="Question"
-                        value={question}
-                        onChange={(e) => setQuestion(e.target.value)}
-                        margin="normal"
-                        variant="outlined"
-                        id="outlined-multiline-flexible"
-                        multiline
-                        maxRows={4}
-                        style={{ paddingBottom: '10px'}}
-                    />
-                    {options.map((option, index) => (
-                        <Box key={index} display="flex" alignItems="center" gap={2}>
+        <Card className="bg-gradient-to-b from-pink-100">
+                    <Box sx={{ width: "80%", justifyContent: "centre", alignItems: 'center', margin:"auto", marginTop :"10px"}} className="from-blue-300 flex min-h-screen flex-col items-center justify-between">
+                        
+                        <Box component="form" onSubmit={handleSubmitQuestion} className="from-blue-300">
                             <TextField
                                 fullWidth
-                                label={`Option ${index + 1}`}
-                                value={option}
-                                onChange={handleOptionChange(index)}
+                                label="Question"
+                                value={question}
+                                onChange={(e) => setQuestion(e.target.value)}
+                                margin="normal"
                                 variant="outlined"
                                 id="outlined-multiline-flexible"
                                 multiline
-                                maxRows={2}
-                                style={{ paddingBottom: '10px' }}
+                                maxRows={4}
+                                style={{ paddingBottom: '10px'}}
                             />
-                            <IconButton onClick={() => handleRemoveOption(index)} color="error">
-                                <DeleteIcon />
-                            </IconButton>
+                            {options.map((option, index) => (
+                                <Box key={index} display="flex" alignItems="center" gap={2}>
+                                    <TextField
+                                        fullWidth
+                                        label={`Option ${index + 1}`}
+                                        value={option}
+                                        onChange={handleOptionChange(index)}
+                                        variant="outlined"
+                                        id="outlined-multiline-flexible"
+                                        multiline
+                                        maxRows={2}
+                                        style={{ paddingBottom: '10px' }}
+                                    />
+                                    <IconButton onClick={() => handleRemoveOption(index)} color="error">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Box>
+                            ))}
+                            <Button startIcon={<AddIcon />} onClick={handleAddOption} variant="outlined" sx={{ width: "100%", marginBottom: "10px", marginTop: "10px"}} >
+                                Add Option
+                            </Button>
+                            <Button startIcon={<SettingsIcon />} variant="outlined" color="primary" sx={{ width: "100%", marginBottom: "10px"}} onClick={handleSuggestQuery}>
+                                Suggest Query
+                            </Button>
+                            <Button type="submit" variant="outlined" color="secondary" sx={{ width: "100%", marginBottom: "10px"}}>
+                                Submit Question
+                            </Button>
                         </Box>
-                    ))}
-                    <Button startIcon={<AddIcon />} onClick={handleAddOption} variant="outlined" sx={{ width: "100%", marginBottom: "10px", marginTop: "10px"}} >
-                        Add Option
-                    </Button>
-                    <Button startIcon={<SettingsIcon />} variant="outlined" color="primary" sx={{ width: "100%", marginBottom: "10px"}} onClick={handleSuggestQuery}>
-                        Suggest Query
-                    </Button>
-                    <Button type="submit" variant="outlined" color="secondary" sx={{ width: "100%", marginBottom: "10px"}}>
-                        Submit Question
-                    </Button>
-                </Box>
                         
                 </Box>
             </Card>
