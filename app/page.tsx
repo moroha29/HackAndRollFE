@@ -8,9 +8,12 @@ import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 
 export default function SimpleBottomNavigation() {
-    if(localStorage.getItem('jwtToken')){
-        redirect("/question");
-    }
+    useEffect(()=>{
+        const token = localStorage.getItem('jwtToken');
+        if (token) {
+            redirect("/question");
+        }
+    },[])
     return (
         <div>
             <main className="flex min-h-screen flex-col items-center justify-between p-24">
