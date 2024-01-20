@@ -57,7 +57,7 @@ const CardDisplay: React.FC<CardDisplayProps> = ({ questionData, handleSubmit })
     };
 
   return (
-      <Card style={{ marginBottom: '22px' }}>
+      <Card style={{ marginBottom: '22px', boxShadow:'0px' }}>
         <CardHeader
             action={
               <IconButton aria-label="settings">

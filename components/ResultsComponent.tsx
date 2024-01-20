@@ -14,8 +14,21 @@ import {
     Pie,
     Cell
 } from 'recharts';
-import { Tabs, Tab, Box, Typography, Card } from '@mui/material';
+import {
+    Tabs,
+    Tab,
+    Box,
+    Typography,
+    Card,
+    IconButton,
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    Button
+} from '@mui/material';
 import {QuestionData} from "@/models/login";
+import TextField from "@mui/material/TextField";
 
 interface ResultsComponentProps {
     data: QuestionData;
@@ -23,6 +36,46 @@ interface ResultsComponentProps {
 
 const ResultsComponent: React.FC<ResultsComponentProps> = ({ data }) => {
     const [selectedTab, setSelectedTab] = React.useState(0);
+    const [isCommentDrawerOpen, setCommentDrawerOpen] = React.useState(false);
+    const [newComment, setNewComment] = React.useState('');
+    const [comments, setComments] = React.useState(data?.comments || []);
+
+    const toggleCommentDrawer = () => {
+        setCommentDrawerOpen(!isCommentDrawerOpen);
+    };
+
+    const addComment = async () => {
+        if (newComment.trim() === '') return;
+
+        try {
+            const token = localStorage.getItem('jwtToken');
+            const response = await fetch('http://localhost:8000/questions/comment', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Include the JWT token in the Authorization header
+                },
+                body: JSON.stringify({
+                    question_id: data._id, // Assuming data._id contains the question ID
+                    comment: newComment
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            // If the backend returns the updated question data including the new comments
+            const updatedQuestionData = await response.json();
+
+            // Assume updatedQuestionData.comments is an array of comment objects
+            setComments(updatedQuestionData.comments); // Update comments with the new list including the added comment
+            setNewComment(''); // Reset the input field
+
+        } catch (error) {
+            console.error('Error adding comment:', error);
+        }
+    };
 
     const processDataForCharts = () => {
         const demographicField = selectedTab === 0 ? 'age_range' : selectedTab === 1 ? 'gender' : 'marital_status';
@@ -60,9 +113,9 @@ const ResultsComponent: React.FC<ResultsComponentProps> = ({ data }) => {
     const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042']; // Extend this array for more options
 
     return (
-        <Card sx={{ margin: '20px', padding: '20px' }}>
+        <Card sx={{ margin: '0px', padding: '0px',boxShadow:'0' }}>
             <Box>
-                <Typography variant="h4">{data?.question}</Typography>
+                <Typography variant="h5">{data?.question}</Typography>
                 <Tabs variant="fullWidth" value={selectedTab} onChange={handleTabChange}>
                     <Tab label="Age Range" />
                     <Tab label="Gender" />
@@ -90,6 +143,28 @@ const ResultsComponent: React.FC<ResultsComponentProps> = ({ data }) => {
                         <Tooltip />
                     </PieChart>
                 </ResponsiveContainer>
+                <IconButton onClick={toggleCommentDrawer}>Toggle Comments</IconButton>
+                {/* Comment Drawer */}
+                <Drawer anchor="bottom" open={isCommentDrawerOpen} onClose={toggleCommentDrawer}>
+                    <List>
+                        {comments.map((commentObj, index) => (
+                            <ListItem key={index}>
+                                <ListItemText primary={commentObj.comment} secondary={`Age: ${commentObj.age_range}, Gender: ${commentObj.gender}, Status: ${commentObj.marital_status}`} />
+                            </ListItem>
+                        ))}
+                    </List>
+                    {/* Add comment input and submit button */}
+                    <TextField
+                        label="Type Comment"
+                        variant="outlined"
+                        fullWidth
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                    />
+                    <Button variant="outlined" color="primary" onClick={addComment}>
+                        Add Comment
+                    </Button>
+                </Drawer>
             </Box>
         </Card>
     );
