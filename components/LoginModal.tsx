@@ -8,17 +8,29 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import { LoginData} from '@/models/login';
+import { Snackbar } from '@mui/material';
 
 
 
 export default function LoginForm() {
     const [open, setOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [errorFound, setErrorFound] = useState(false);
     const [formData, setFormData] = useState<LoginData>({
         username: '',
         password: '',
     });
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setFormData({
+            username: '',
+            password: '',
+        })
+    }
+    const handleErrorClose = () =>{
+        setErrorFound(false);
+    }
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
         if (token) {
@@ -37,7 +49,11 @@ export default function LoginForm() {
             "name": formData.username,
             "hashed_password": formData.password,
         };
-
+        if(!formData.username || !formData.password){
+            setErrorMessage("Please fill in all required fields");
+            setErrorFound(true);
+            return;
+        }
         try {
             const response = await fetch(`http://localhost:8000/users/login/`, { // Replace with your login endpoint
                 method: 'POST',
@@ -49,6 +65,10 @@ export default function LoginForm() {
             });
             console.log(loginPayload);
             if (!response.ok) {
+                if (response.status==401){
+                    setErrorMessage("Login credentials are wrong please check again!");
+                    setErrorFound(true);
+                }
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
@@ -110,6 +130,12 @@ export default function LoginForm() {
                 <Button onClick={handleClose}>Cancel</Button> {/* Close button */}
             </DialogActions>
       </Dialog>
+      <Snackbar
+        open={errorFound}
+        autoHideDuration={6000}
+        onClose={handleErrorClose}
+        message={errorMessage}
+        />
     </React.Fragment>
   );
 }

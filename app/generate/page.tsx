@@ -88,44 +88,67 @@ export default function SimpleBottomNavigation() {
     };
 
     return (
+
+        <div>
+
+        <main className="flex min-h-screen flex-col items-center justify-between p-12">
+        <div className="z-10 items-center justify-between font-mono text-sm lg:flex">
+            
+        <div>
         <Card>
-        <Box sx={{ width: "100%" }}>
-            <Navbar/>
-            <Box component="form" onSubmit={handleSubmitQuestion}>
-                <TextField
-                    fullWidth
-                    label="Question"
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    margin="normal"
-                    variant="filled"
-                />
-                {options.map((option, index) => (
-                    <Box key={index} display="flex" alignItems="center" gap={2}>
-                        <TextField
-                            fullWidth
-                            label={`Option ${index + 1}`}
-                            value={option}
-                            onChange={handleOptionChange(index)}
-                            variant="outlined"
-                            sx={{ my: 0.5 }}
-                        />
-                        <IconButton onClick={() => handleRemoveOption(index)} color="error">
-                            <DeleteIcon />
-                        </IconButton>
+                    <Box sx={{ width: "80%", justifyContent: "centre", alignItems: 'center', margin:"auto", marginTop :"10px"}} className="flex min-h-screen flex-col items-center justify-between">
+                        
+                        <Box component="form" onSubmit={handleSubmitQuestion}>
+                            <TextField
+                                fullWidth
+                                label="Question"
+                                value={question}
+                                onChange={(e) => setQuestion(e.target.value)}
+                                margin="normal"
+                                variant="outlined"
+                                id="outlined-multiline-flexible"
+                                multiline
+                                maxRows={4}
+                                style={{ paddingBottom: '10px'}}
+                            />
+                            {options.map((option, index) => (
+                                <Box key={index} display="flex" alignItems="center" gap={2}>
+                                    <TextField
+                                        fullWidth
+                                        label={`Option ${index + 1}`}
+                                        value={option}
+                                        onChange={handleOptionChange(index)}
+                                        variant="outlined"
+                                        id="outlined-multiline-flexible"
+                                        multiline
+                                        maxRows={2}
+                                        style={{ paddingBottom: '10px' }}
+                                    />
+                                    <IconButton onClick={() => handleRemoveOption(index)} color="error">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Box>
+                            ))}
+                            <Button startIcon={<AddIcon />} onClick={handleAddOption} variant="outlined" sx={{ width: "100%", marginBottom: "10px", marginTop: "10px"}} >
+                                Add Option
+                            </Button>
+                            <Button startIcon={<SettingsIcon />} variant="outlined" color="primary" sx={{ width: "100%", marginBottom: "10px"}} onClick={handleSuggestQuery}>
+                                Suggest Query
+                            </Button>
+                            <Button type="submit" variant="outlined" color="secondary" sx={{ width: "100%", marginBottom: "10px"}}>
+                                Submit Question
+                            </Button>
+                        </Box>
+                        
                     </Box>
-                ))}
-                <Button startIcon={<AddIcon />} onClick={handleAddOption} variant="outlined">
-                    Add Option
-                </Button>
-                <Button startIcon={<SettingsIcon />} variant="outlined" color="primary" onClick={handleSuggestQuery}>
-                    Suggest Query
-                </Button>
-                <Button type="submit" variant="outlined" color="secondary">
-                    Submit Question
-                </Button>
-            </Box>
-        </Box>
-        </Card>
+                    </Card>
+            </div>
+            </div>
+            
+        </main>
+        <Box sx={{ width: "100%" }} className="fixed z-10 bottom-0">
+                    <Navbar />
+                </Box>
+        </div>
     );
 }

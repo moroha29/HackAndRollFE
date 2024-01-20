@@ -9,10 +9,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import MenuItem from '@mui/material/MenuItem';
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import { RegisterData,marital_status,age_range,gender } from '@/models/login';
+import { Snackbar } from '@mui/material';
+import { redirect } from 'next/navigation';
 
 
 export default function RegisterForm() {
     const [open, setOpen] = useState(false);
+    const [errorFound, setErrorFound] = useState(false);
     const [formData, setFormData] = useState<RegisterData>({
         username: '',
         password: '',
@@ -21,7 +24,19 @@ export default function RegisterForm() {
         marital_status: '',
     });
     const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const handleClose = () => {
+        setOpen(false);
+        setFormData({
+            username: '',
+            password: '',
+            age_range: '',
+            gender: '',
+            marital_status: '',
+        })
+    }
+    const handleErrorClose = () =>{
+        setErrorFound(false);
+    }
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
         if (token) {
@@ -37,7 +52,7 @@ export default function RegisterForm() {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        console.log(formData); // For debugging
+        console.log(event); // For debugging
         const payload = {
             name: formData.username,
             hashed_password: formData.password,
@@ -45,8 +60,11 @@ export default function RegisterForm() {
             gender: formData.gender,
             marital_status: formData.marital_status,
         };
+        if(!formData.username || !formData.password || !formData.age_range || !formData.gender || !formData.marital_status){
+            setErrorFound(true);
+            return;
+        }
         try {
-
             const response = await fetch(`http://localhost:8000/users/register/`, {
                 method: 'POST',
                 headers: {
@@ -57,22 +75,20 @@ export default function RegisterForm() {
             });
 
             if (!response.ok) {
-                console.log(response)
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
             const data = await response.json();
-
+            console.log(data)
             // Assuming the JWT token is in the 'token' field of the response
-            const token = data.token;
-            if (token) {
-                console.log("Received JWT Token:", token);
+            // const token = data.token;
+            if (data) {
+                console.log("Received JWT Token:", data);
                 // Store the token in localStorage or sessionStorage
-                localStorage.setItem('jwtToken', token);
+                localStorage.setItem('jwtToken', data);
                 // You can now use this token for authenticated requests to your backend
-
+                redirect("/question");
             }
-
             handleClose();
         } catch (error) {
             console.error('Error sending registration data:', error);
@@ -103,85 +119,90 @@ export default function RegisterForm() {
                       variant="standard"
                       onChange={handleChange}
                   />
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="hashed_password"
-                name="password"
-                label="Password"
-                type="password"
-                fullWidth
-                variant="standard"
-                onChange={handleChange}
-            />
-            
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="demo-simple-select"
-                select
-                label="Age Range"
-                helperText="Please select your age range"
-                fullWidth
-                variant = "standard"
-                name = "age_range"
-                onChange={handleChange}
-                >
-                {age_range.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
+                <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="hashed_password"
+                    name="password"
+                    label="Password"
+                    type="password"
+                    fullWidth
+                    variant="standard"
+                    onChange={handleChange}
+                />
+                
+                <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="demo-simple-select"
+                    select
+                    label="Age Range"
+                    helperText="Please select your age range"
+                    fullWidth
+                    variant = "standard"
+                    name = "age_range"
+                    onChange={handleChange}
+                    >
+                    {age_range.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
 
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="demo-simple-select"
-                name="gender"
-                label="Gender"
-                fullWidth
-                variant="standard"
-                select
-                helperText="Please select your gender"
-                onChange={handleChange}
-                >
-                {gender.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
+                <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="demo-simple-select"
+                    name="gender"
+                    label="Gender"
+                    fullWidth
+                    variant="standard"
+                    select
+                    helperText="Please select your gender"
+                    onChange={handleChange}
+                    >
+                    {gender.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
 
-            <TextField
-                autoFocus
-                required
-                margin="dense"
-                id="demo-simple-select"
-                name="marital_status"
-                label="Marital Status"
-                fullWidth
-                variant="standard"
-                select
-                helperText="Please select your marital status"
-                onChange={handleChange}
-                >
-                {marital_status.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                    </MenuItem>
-                ))}
-            </TextField>
-            
-        </DialogContent>
+                <TextField
+                    autoFocus
+                    required
+                    margin="dense"
+                    id="demo-simple-select"
+                    name="marital_status"
+                    label="Marital Status"
+                    fullWidth
+                    variant="standard"
+                    select
+                    helperText="Please select your marital status"
+                    onChange={handleChange}
+                    >
+                    {marital_status.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                        {option.label}
+                        </MenuItem>
+                    ))}
+                </TextField>
+            </DialogContent>
               <DialogActions>
                   <Button onClick={handleSubmit}>Create Account</Button>
                   <Button onClick={handleClose}>Cancel</Button>
               </DialogActions>
       </Dialog>
+      <Snackbar
+        open={errorFound}
+        autoHideDuration={6000}
+        onClose={handleErrorClose}
+        message="Please fill in all required fields"
+        />
     </React.Fragment>
   );
 }

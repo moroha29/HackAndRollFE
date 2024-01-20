@@ -16,16 +16,9 @@ function Navbar() {
                 setValue(newValue);
             }}
         >
-
-            <Link href="question">
-                <BottomNavigationAction label="Answer Qns" icon={<QuestionAnswerIcon />} />
-            </Link>
-            <Link href="generate">
-                <BottomNavigationAction label="Generate Qns" icon={<AddCircleOutlineIcon />} />
-            </Link>
-            <Link href="">
-                <BottomNavigationAction label="Like" icon={<ThumbUpIcon />} />
-            </Link>
+            <BottomNavigationAction label="Answer Qns" icon={<QuestionAnswerIcon />} href="/question" />
+            <BottomNavigationAction label="Generate Qns" icon={<AddCircleOutlineIcon />} href="/generate"/>
+            <BottomNavigationAction label="Like" icon={<ThumbUpIcon />} />
         </BottomNavigation>
     );
 }
