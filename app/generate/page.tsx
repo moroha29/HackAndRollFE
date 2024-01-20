@@ -3,15 +3,14 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {Card, IconButton} from "@mui/material";
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from "@material-ui/icons/Add";
 import SettingsIcon from '@material-ui/icons/Settings';
+import Navbar from "@/components/NavBar";
 export default function SimpleBottomNavigation() {
     const [value, setValue] = useState(0);
     const [question, setQuestion] = useState('');
@@ -90,17 +89,7 @@ export default function SimpleBottomNavigation() {
     return (
         <Card>
         <Box sx={{ width: "100%" }}>
-            <BottomNavigation
-                showLabels
-                value={value}
-                onChange={(event, newValue) => {
-                    setValue(newValue);
-                }}
-            >
-                <BottomNavigationAction label="Answer Qns" icon={<QuestionAnswerIcon />} />
-                <BottomNavigationAction label="Generate Qns" icon={<AddCircleOutlineIcon />} />
-                <BottomNavigationAction label="Like" icon={<ThumbUpIcon />} />
-            </BottomNavigation>
+            <Navbar/>
             <Box component="form" onSubmit={handleSubmitQuestion}>
                 <TextField
                     fullWidth
