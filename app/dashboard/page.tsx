@@ -41,6 +41,11 @@ const ResultsPage = () => {
 
     const handleSubmission = (newData: QuestionData) => {
         setSubmittedQuestions(prev => [...prev, newData._id]);
+        setQuestions(prevQuestions =>
+            prevQuestions.map(question =>
+                question._id === newData._id ? newData : question
+            )
+        );
     };
 
     if (loading) {

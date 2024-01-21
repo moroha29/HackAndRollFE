@@ -41,6 +41,7 @@ const RandomQuestionPage = () => {
 
     const handleSubmission = (newData: QuestionData) => {
         setSubmittedQuestions(prev => [...prev, newData._id]);
+        setQuestion(newData);
     };
     
 
@@ -53,7 +54,7 @@ const RandomQuestionPage = () => {
             </Card>
         );
     }
-
+    if (question !== null) {
     return (
         <Box className="">
             <div className="content-center flex justify-center">
@@ -64,7 +65,11 @@ const RandomQuestionPage = () => {
             </div>
             <Navbar/>
         </Box>
-    );
+    );}
+    else{
+        return(<h1>ran out of questions </h1>)
+    }
+
 }
 
 export default RandomQuestionPage;
