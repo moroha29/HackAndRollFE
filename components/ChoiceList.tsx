@@ -11,17 +11,14 @@ interface Choice {
 
 interface ChoiceListProps {
     choices: Choice[];
-    onChoiceSelect: (selectedChoiceIds: string[]) => void;
+    onChoiceSelect: (selectedChoiceIds: string) => void;
 }
 
 const ChoiceList: React.FC<ChoiceListProps> = ({ choices, onChoiceSelect }) => {
-    const [selectedChoices, setSelectedChoices] = useState<string[]>([]);
+    const [selectedChoices, setSelectedChoices] = useState<string>();
 
     const handleChoiceSelect = (event: React.ChangeEvent<HTMLInputElement>, choiceId: string) => {
-        const newSelectedChoices = event.target.checked
-            ? [...selectedChoices, choiceId]
-            : selectedChoices.filter(id => id !== choiceId);
-
+        const newSelectedChoices = event.target.checked ? choiceId : ""
         setSelectedChoices(newSelectedChoices);
         onChoiceSelect(newSelectedChoices);
     };
@@ -34,7 +31,7 @@ const ChoiceList: React.FC<ChoiceListProps> = ({ choices, onChoiceSelect }) => {
                     key={choice.id}
                     control={
                         <Checkbox
-                            checked={selectedChoices.includes(choice.id)}
+                            checked={selectedChoices==choice.id}
                             onChange={(event) => handleChoiceSelect(event, choice.id)}
                         />
                     }
