@@ -89,13 +89,13 @@ export default function SimpleBottomNavigation() {
 
     return (
 
-        <div className='bg-black h-screen'>
+        <div className='bg-gradient-to-b from-pink-100 h-screen'>
 
         <main className="flex flex-col items-center justify-between pt-10 py-2">
         <div className="z-10 items-center justify-between font-mono text-sm lg:flex">
             
         <div>
-        <Card className="bg-gradient-to-b from-pink-100">
+        <Card className="bg-gradient-to-b from-pink-100" >
                     <Box sx={{ width: "80%", justifyContent: "centre", alignItems: 'center', margin:"auto", marginTop :"10px"}} className="from-blue-300 flex flex-col items-center justify-between">
                         
                         <Box component="form" onSubmit={handleSubmitQuestion} className="from-blue-300">
