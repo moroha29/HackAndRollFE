@@ -19,8 +19,8 @@ export default function SimpleBottomNavigation() {
             <main className="flex min-h-screen flex-col items-center justify-between p-24">
                 <div className="mb-32 grid text-center lg:text-left lg:mr-[20em]">
                     <div className="group rounded-lg border border-transparent px-5 py-4">
-                        <h1 className={`mb-3 text-6xl font-semibold`}>MewTwo</h1>
-                        <p className={`m-0 mb-3 text-l opacity-50`}>AI-powered degeneracy, brought to you by degenerates.</p>
+                        <h1 className={`mb-3 text-6xl font-semibold`}>Don`t Paiseh</h1>
+                        <p className={`m-0 mb-3 text-l opacity-50`}>A novel take on Singapore`s Unspoken Question</p>
                         <div className="xl:columns-3 mb-3 mt-8 "><LoginForm /></div>
                         <div className="xl:columns-3 "><RegisterForm /></div>
                     </div>
