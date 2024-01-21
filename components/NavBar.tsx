@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ShuffleIcon from '@material-ui/icons/Shuffle';
 import Link from '@mui/material/Link';
 
 function Navbar() {
@@ -18,7 +18,7 @@ function Navbar() {
         >
             <BottomNavigationAction label="Answer Qns" icon={<QuestionAnswerIcon />} href="/dashboard" />
             <BottomNavigationAction label="Generate Qns" icon={<AddCircleOutlineIcon />} href="/generate"/>
-            <BottomNavigationAction label="Like" icon={<ThumbUpIcon />} />
+            <BottomNavigationAction label="Random Qn" icon={<ShuffleIcon />} href="/random"/>
         </BottomNavigation>
         </Box>
     );
