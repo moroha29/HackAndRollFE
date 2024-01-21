@@ -9,11 +9,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import { LoginData} from '@/models/login';
 import { Snackbar } from '@mui/material';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation'
+
 
 
 
 export default function LoginForm() {
+    const router = useRouter()
     const [open, setOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [errorFound, setErrorFound] = useState(false);
@@ -81,10 +83,9 @@ export default function LoginForm() {
                 console.log("Received JWT Token:", token);
                 // Store the token in localStorage or sessionStorage
                 localStorage.setItem('jwtToken', token);
-                // You can now use this token for authenticated requests to your backend
-                redirect("/question");
-            }
-
+                // You can now use this token for authenticated requests to your backend\\
+                router.push("/dashboard")
+            }   
             handleClose();
         } catch (error) {
             console.error('Error during login:', error);

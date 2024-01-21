@@ -11,9 +11,11 @@ import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import { RegisterData,marital_status,age_range,gender } from '@/models/login';
 import { Snackbar } from '@mui/material';
 import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation'
 
 
 export default function RegisterForm() {
+    const router = useRouter()
     const [open, setOpen] = useState(false);
     const [errorFound, setErrorFound] = useState(false);
     const [formData, setFormData] = useState<RegisterData>({
@@ -87,7 +89,7 @@ export default function RegisterForm() {
                 // Store the token in localStorage or sessionStorage
                 localStorage.setItem('jwtToken', data);
                 // You can now use this token for authenticated requests to your backend
-                redirect("/question");
+                router.push("/dashboard");
             }
             handleClose();
         } catch (error) {

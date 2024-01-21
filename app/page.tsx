@@ -11,7 +11,7 @@ export default function SimpleBottomNavigation() {
     useEffect(()=>{
         const token = localStorage.getItem('jwtToken');
         if (token) {
-            redirect("/question");
+            redirect("/dashboard");
         }
     },[])
     return (
