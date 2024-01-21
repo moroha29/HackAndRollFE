@@ -71,8 +71,9 @@ const ResultsPage = () => {
     }
 
     return (
-        <Box    >
-            <div className="bg-gradient-to-b from-pink-100 grid grid-cols-1 gap-1 xl:grid-cols-2">
+        <div className="bg-gradient-to-b from-pink-100 h-screen*12">
+        <Box >
+            <div className=" grid grid-cols-1 gap-1 xl:grid-cols-2">
             {questions.map(question => (
                 <Card className="shadow-lg shadow-indigo-500/40" key={question._id} sx={{ margin: '20px', padding: '20px' }}>
                     {!submittedQuestions.includes(question._id) && <CardDisplay questionData={question} handleSubmit={() => handleSubmission(question)} />}
@@ -82,6 +83,7 @@ const ResultsPage = () => {
             </div>
             <Navbar/>
         </Box>
+        </div>
     );
 };
 

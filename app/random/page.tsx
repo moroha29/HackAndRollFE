@@ -56,7 +56,7 @@ const RandomQuestionPage = () => {
     }
     if (question !== null) {
     return (
-        <Box className="">
+        <Box className="bg-gradient-to-b from-pink-100 h-screen">
             <div className="content-center flex justify-center">
                 <Card className="shadow-lg shadow-indigo-500/40 w-full xl:w-7/12"  sx={{ margin: '20px', padding: '20px'}}>
                     {!submittedQuestions.includes(question._id) && <CardDisplay questionData={question} handleSubmit={handleSubmission}/>}
