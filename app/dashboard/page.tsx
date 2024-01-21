@@ -47,7 +47,6 @@ const ResultsPage = () => {
             )
         );
     };
-
     if (loading) {
         return (
             <Card className="flex bg-gradient-to-b from-pink-100 min-h-screen flex-col items-center justify-between" >
@@ -76,7 +75,7 @@ const ResultsPage = () => {
             <div className=" grid grid-cols-1 gap-1 xl:grid-cols-2">
             {questions.map(question => (
                 <Card className="shadow-lg shadow-indigo-500/40" key={question._id} sx={{ margin: '20px', padding: '20px' }}>
-                    {!submittedQuestions.includes(question._id) && <CardDisplay questionData={question} handleSubmit={() => handleSubmission(question)} />}
+                    {!submittedQuestions.includes(question._id) && <CardDisplay questionData={question} handleSubmit={handleSubmission} />}
                     {submittedQuestions.includes(question._id) && <ResultsComponent data={question} />}
                 </Card>
             ))}

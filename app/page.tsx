@@ -20,7 +20,7 @@ export default function SimpleBottomNavigation() {
                 <div className="mb-32 grid text-center lg:text-left lg:mr-[20em]">
                     <div className="group rounded-lg border border-transparent px-5 py-4">
                         <h1 className={`mb-3 text-6xl font-semibold`}>Don`t Paiseh</h1>
-                        <p className={`m-0 mb-3 text-l opacity-50`}>A novel take on Singapore`s Unspoken Question</p>
+                        <p className={`m-0 mb-3 text-l opacity-50`}>A novel take on Singapore`s unspoken questions.</p>
                         <div className="xl:columns-3 mb-3 mt-8 "><LoginForm /></div>
                         <div className="xl:columns-3 "><RegisterForm /></div>
                     </div>

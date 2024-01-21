@@ -104,7 +104,7 @@ export default function RegisterForm() {
               Create Account!
           </Button>
           <Dialog open={open} onClose={handleClose}>
-              <DialogTitle>Welcome to Paiseh Questions</DialogTitle>
+              <DialogTitle>Welcome to Don`t Paiseh</DialogTitle>
               <DialogContent>
                   <DialogContentText>
                       To create an account, you will need to fill up the following details.
