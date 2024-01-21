@@ -67,7 +67,20 @@ const RandomQuestionPage = () => {
         </Box>
     );}
     else{
-        return(<h1>ran out of questions </h1>)
+        return(
+        <div>
+            <main className="flex bg-gradient-to-b from-pink-100 min-h-screen flex-col items-center justify-between">
+                <div className="z-10 items-center min-w-screen justify-between font-mono text-sm lg:flex">
+                    <Card className="bg-gradient-to-b from-pink-100"><h1>Ran out of questions</h1></Card>
+                </div>
+                
+            </main>
+            <Box sx={{ width: "100%" }} className="fixed z-10 bottom-0">
+                    <Navbar />
+                </Box>
+        </div>
+        );
+            
     }
 
 }
