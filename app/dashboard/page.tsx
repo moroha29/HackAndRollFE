@@ -59,7 +59,7 @@ const ResultsPage = () => {
                     <div className="z-10 items-center min-w-screen justify-between font-mono text-sm lg:flex">
             
             <div className="bg-gradient-to-b from-pink-100 grid grid-cols-1 gap-1 xl:grid-cols-2">
-        <Card sx={{ margin: '20px', padding: '20px' }}><Typography variant="h4">Ran out of questions</Typography></Card>;
+        <Card sx={{ margin: '20px', padding: '20px' }}><Typography variant="h4">Ran out of questions</Typography></Card>
         </div>
         </div> </main>
         )
