@@ -1,7 +1,7 @@
 # HackAndRoll 2024
 # Don't Paiseh (Frontend)
 
-**Note:** This repository contains only the frontend code for the "Don't Paiseh" app. The backend code is located in a separate repository, which can be found [here]([link-to-backend-repo](https://github.com/moroha29/HackAndRollBE)).
+**Note:** This repository contains only the frontend code for the "Don't Paiseh" app. The backend code is located in a separate repository, which can be found ([here](https://github.com/moroha29/HackAndRollBE)).
 
 ## Overview
 
