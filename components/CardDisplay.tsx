@@ -45,7 +45,7 @@ const CardDisplay: React.FC<CardDisplayProps> = ({ questionData, handleSubmit })
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
             const responseData = await response.json();
-            handleSubmit(responseData); // Pass the response data to the parent component
+            handleSubmit({...responseData,answers:[...responseData.answers]}); // Pass the response data to the parent component
         } catch (error) {
             console.error('Error submitting choice:', error);
         }
