@@ -39,3 +39,12 @@ After authentication, users will be provided with questions where they can respo
 
 ![Questions on Dashboard](image.png)
 ![Responses on Dashboard](image-2.png)
+
+
+## Tech Stack
+
+Front End: TypeScript Next.js (React)
+
+Back End: Python FastAPI
+
+Database: MongoDB
