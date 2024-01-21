@@ -37,7 +37,7 @@ const CardDisplay: React.FC<CardDisplayProps> = ({ questionData, handleSubmit })
                     },
                     body: JSON.stringify({
                         question_id: questionData._id,
-                        option: selectedOption[0]
+                        option: selectedOption
                     }),
                 });
 
